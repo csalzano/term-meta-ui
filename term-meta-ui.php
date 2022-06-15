@@ -6,7 +6,7 @@ defined( 'ABSPATH' ) or exit;
  * Description: Provides a user interface for reading and writing term meta data.
  * Author: Corey Salzano
  * Author URI: https://breakfastco.xyz
- * Version: 0.1.0
+ * Version: 0.2.0
  * Text-domain: term-meta-ui
  * License: GPLv2
  */
