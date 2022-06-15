@@ -16,6 +16,7 @@ class Term_Meta_UI
 	public function add_hooks()
 	{
 		add_action( 'admin_init', array( $this, 'add_term_meta_box' ) );
+		add_action( 'edit_term', array( $this, 'maybe_save_term_meta' ), 10, 3 );
 	}
 
 	public function add_meta_box( $term ) {
@@ -53,15 +54,15 @@ class Term_Meta_UI
 				$class               = 'all-options';
 			}
 
-			$name = esc_attr( $row->meta_key );
+			$input_name = esc_attr( "meta_{$row->meta_key}" );
 
 		?><tr>
-			<th scope="row"><label for="<?php echo $name; ?>"><?php echo esc_html( $row->meta_key ); ?></label></th>
+			<th scope="row"><label for="<?php echo $input_name; ?>"><?php echo esc_html( $row->meta_key ); ?></label></th>
 		<td>
 			<?php if ( strpos( $value, "\n" ) !== false ) : ?>
-				<textarea class="<?php echo $class; ?>" name="<?php echo $name; ?>" id="<?php echo $name; ?>" cols="30" rows="5"><?php echo esc_textarea( $value ); ?></textarea>
+				<textarea class="<?php echo $class; ?>" name="<?php echo $input_name; ?>" id="<?php echo $input_name; ?>" cols="30" rows="5"><?php echo esc_textarea( $value ); ?></textarea>
 			<?php else : ?>
-				<input class="regular-text <?php echo $class; ?>" type="text" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="<?php echo esc_attr( $value ); ?>"<?php disabled( $disabled, true ); ?> />
+				<input class="regular-text <?php echo $class; ?>" type="text" name="<?php echo $input_name; ?>" id="<?php echo $input_name; ?>" value="<?php echo esc_attr( $value ); ?>"<?php disabled( $disabled, true ); ?> />
 			<?php endif; ?></td>
 		</tr><?php endforeach; ?></tbody></table></div></div><?php
 	}
@@ -77,6 +78,34 @@ class Term_Meta_UI
 		}
 
 		add_action( "{$current_taxonomy}_edit_form", array( $this, 'add_meta_box' ) );
+	}
+
+	public function maybe_save_term_meta( $term_id, $tt_id, $taxonomy )
+	{
+		//Is this edit-tags.php?
+		if( 'editedtag' != filter_input( INPUT_POST, 'action' ) )
+		{
+			return;
+		}
+
+		//Can this user edit terms?
+		if ( ! current_user_can( 'edit_term', $term_id ) )
+		{
+			//No
+			return;
+		}
+
+		foreach( $_POST as $key => $value )
+		{
+			//Does this key start with meta_?
+			if( strlen( $key ) < 5 || 'meta_' != substr( $key, 0, 5 ) )
+			{
+				continue;
+			}
+
+			//Proceed even if value is empty, user could be blanking it out 
+			update_term_meta( $term_id, substr( $key, 5 ), $value );
+		}
 	}
 }
 $term_meta_ui_plugin_2038745092374 = new Term_Meta_UI();
