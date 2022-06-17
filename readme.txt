@@ -5,7 +5,7 @@ Tags: termmeta, term-meta, tags, wp_termmeta
 Requires at least: 4.6
 Tested up to: 6.0.0
 Requires PHP: 7.2
-Stable tag: 0.2.1
+Stable tag: 0.3.0
 License: GPLv2
 
 == Description ==
