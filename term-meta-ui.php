@@ -54,7 +54,7 @@ class Term_Meta_UI
 				$class               = 'all-options';
 			}
 
-			$input_name = esc_attr( "meta_{$row->meta_key}" );
+			$input_name = esc_attr( "meta[{$row->meta_key}][]" );
 
 		?><tr>
 			<th scope="row"><label for="<?php echo $input_name; ?>"><?php echo esc_html( $row->meta_key ); ?></label></th>
@@ -95,16 +95,16 @@ class Term_Meta_UI
 			return;
 		}
 
-		foreach( $_POST as $key => $value )
+		if( ! empty( $_POST['meta'] ) )
 		{
-			//Does this key start with meta_?
-			if( strlen( $key ) < 5 || 'meta_' != substr( $key, 0, 5 ) )
+			foreach( $_POST['meta'] as $key => $values )
 			{
-				continue;
+				delete_term_meta( $term_id, $key );
+				foreach( $values as $value )
+				{
+					add_term_meta( $term_id, $key, $value );
+				}
 			}
-
-			//Proceed even if value is empty, user could be blanking it out 
-			update_term_meta( $term_id, substr( $key, 5 ), $value );
 		}
 	}
 }
