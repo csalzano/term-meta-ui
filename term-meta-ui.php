@@ -6,7 +6,7 @@ defined( 'ABSPATH' ) or exit;
  * Description: Provides a user interface for reading and writing term meta data.
  * Author: Corey Salzano
  * Author URI: https://breakfastco.xyz
- * Version: 0.2.0
+ * Version: 0.2.1
  * Text-domain: term-meta-ui
  * License: GPLv2
  */
@@ -63,7 +63,8 @@ class Term_Meta_UI
 				<textarea class="<?php echo $class; ?>" name="<?php echo $input_name; ?>" id="<?php echo $input_name; ?>" cols="30" rows="5"><?php echo esc_textarea( $value ); ?></textarea>
 			<?php else : ?>
 				<input class="regular-text <?php echo $class; ?>" type="text" name="<?php echo $input_name; ?>" id="<?php echo $input_name; ?>" value="<?php echo esc_attr( $value ); ?>"<?php disabled( $disabled, true ); ?> />
-			<?php endif; ?></td>
+			<?php endif; ?>
+		</td>
 		</tr><?php endforeach; ?></tbody></table></div></div><?php
 	}
 
