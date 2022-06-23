@@ -24,8 +24,15 @@ class Term_Meta_UI
 			return;
 		}
 
+		//Term Meta UI title
 		?><h2><?php esc_html_e( 'Term Meta UI', 'term-meta-ui' ); ?></h2><?php
-			?><div id="poststuff"><div class="term_meta_ui"><table class="form-table" role="presentation"><tbody><?php
+			?><div id="poststuff"><div class="term_meta_ui"><table class="form-table" role="presentation"><tbody><tr><?php
+
+		//Add controls
+		?><th scope="row"><input type="text" class="regular-text all-options" name="term_meta_ui_new_key" id="term_meta_ui_new_key" placeholder="<?php echo esc_attr__( 'new_key', 'term-meta-ui' ); ?>" /></th>
+		<td><input type="text" class="regular-text all-options" name="term_meta_ui_new_value" id="term_meta_ui_new_value" placeholder="<?php echo esc_attr__( 'value', 'term-meta-ui' ); ?>" /></td>
+		</tr><?php
+
 
 		global $wpdb;
 		$term_meta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->termmeta WHERE term_id = %d ORDER BY meta_key", $term->term_id ) );
@@ -65,7 +72,8 @@ class Term_Meta_UI
 				<input class="regular-text <?php echo $class; ?>" type="text" name="<?php echo $input_name; ?>" id="<?php echo $input_name; ?>" value="<?php echo esc_attr( $value ); ?>"<?php disabled( $disabled, true ); ?> />
 			<?php endif; ?>
 		</td>
-		</tr><?php endforeach; ?></tbody></table></div></div><?php
+		</tr><?php endforeach; ?>
+		</tbody></table></div></div><?php
 	}
 
 	public function add_term_meta_box()
@@ -106,6 +114,16 @@ class Term_Meta_UI
 					add_term_meta( $term_id, $key, $value );
 				}
 			}
+		}
+
+		//Did the user enter values to add a new key value pair?
+		if( ! empty( $_POST['term_meta_ui_new_key'] ) )
+		{
+			add_term_meta(
+				$term_id,
+				sanitize_text_field( $_POST['term_meta_ui_new_key'] ),
+				sanitize_text_field( $_POST['term_meta_ui_new_value'] ?? '' )
+			);
 		}
 	}
 }
