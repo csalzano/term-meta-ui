@@ -5,7 +5,7 @@ Tags: termmeta, term-meta, tags, wp_termmeta
 Requires at least: 4.6
 Tested up to: 6.0.0
 Requires PHP: 7.2
-Stable tag: 0.3.0
+Stable tag: 0.4.0
 License: GPLv2
 
 == Description ==
@@ -13,6 +13,9 @@ License: GPLv2
 Provides a user interface for reading and writing term meta data.
 
 == Changelog ==
+
+= 0.4.0 =
+- [Added] Enables users to add a new key value pair using two blank text boxes
 
 = 0.2.1 =
 - [Fixed] Now handles multi-valued meta fields 
