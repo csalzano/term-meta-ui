@@ -4,11 +4,14 @@
  * Description: Provides a user interface for reading and writing term meta data.
  * Author: Corey Salzano
  * Author URI: https://breakfastco.xyz
- * Version: 0.4.0
+ * Version: 0.4.1
  * Text-domain: term-meta-ui
  * License: GPLv2
  * GitHub Plugin URI: csalzano/term-meta-ui
  * Primary Branch: main
+ *
+ * @author Corey Salzano <csalzano@duck.com>
+ * @package term-meta-ui
  */
 
 defined( 'ABSPATH' ) || exit;
