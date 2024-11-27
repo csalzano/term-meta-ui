@@ -9,6 +9,8 @@ defined( 'ABSPATH' ) or exit;
  * Version: 0.4.0
  * Text-domain: term-meta-ui
  * License: GPLv2
+ * GitHub Plugin URI: csalzano/term-meta-ui
+ * Primary Branch: main
  */
 
 class Term_Meta_UI
